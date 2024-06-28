@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+    <h1 class="text-center mt-5 mb-5 text-primary">Registrar Socios Del Club</h1>
+
+    <div class="container">
+        <div class="card shadow">
+            <div class="card-body">
+                <form action="/Agregar" method="POST">
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label>Nombre</label>
+                            <input type="text" class="form-control mb-3" name="Nombre">
+                        </div>
+                        <div class="col">
+                            <label>Apellido</label>
+                            <input type="text" class="form-control mb-3" name="Apellido">
+                        </div>
+                        <div class="col">
+                            <label>Dni</label>
+                            <input type="text" class="form-control mb-3" name="Dni">
+                        </div>
+                        <div class="col">
+                            <label>Edad</label>
+                            <input type="text" class="form-control mb-3" name="Edad">
+                        </div>
+                        <div class="col">
+                            <label>Deporte</label>
+                            <input type="text" class="form-control mb-3" name="Deporte">
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-primary mb-3 mt-4" type="submit">Registrar</button>
+                        </div>
+                    </div>
+
+                </form>
+
+
+                <!-- Tabla -->
+
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Numero Socio</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Apellido</th>
+                            <th scope="col">Dni</th>
+                            <th scope="col">Edad</th>
+                            <th scope="col">Deporte</th>
+                            <th scope="col">Editar</th>
+                            <th scope="col">Borrar</th>
+                        </tr>
+                    </thead>
+                
+                <tbody>
+                    {% for d in data %}
+                        <tr>
+                            <td>{{d.Id_Socios}}</td>
+                            <td>{{d.Nombre}}</td>
+                            <td>{{d.Apellido}}</td>
+                            <td>{{d.Dni}}</td>
+                            <td>{{d.Edad}}</td>
+                            <td>{{d.Deporte}}</td>
+                            <td><button class="btn btn-primary btn-sm" id="btn-edit{{d.Id_Socios}}" data-bs-toggle="modal" data-bs-target="#modal{{d.Id_Socios}}">Editar</button></td>
+                            <td><a href="{{url_for('delete', id=d.Id_Socios)}}" class="btn btn-danger btn-sm">Borrar</a></td>
+                        </tr>
+
+                        <!-- modal -->
+
+                        <div class="modal fade" id="modal{{d.Id_Socios}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h1 class="modal-title fs-5" id="exampleModalLabel">Editar</h1>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="/Edit/{{ d.Id_Socios }}" method="post">
+                                        <label>Nombre</label>
+                                        <input type="text" class="form-control mb-3" name="Nombre" value="{{d.Nombre}}">
+                                        <label>Apellido</label>
+                                        <input type="text" class="form-control mb-3" name="Apellido" value="{{d.Apellido}}">
+                                        <label>Dni</label>
+                                        <input type="text" class="form-control mb-3" name="Dni" value="{{d.Dni}}">
+                                        <label>Edad</label>
+                                        <input type="text" class="form-control mb-3" name="Edad" value="{{d.Edad}}">
+                                        <label>Deporte</label>
+                                        <input type="text" class="form-control mb-3" name="Deporte" value="{{d.Deporte}}">
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="submit" class="btn btn-primary">guardar cambios</button>
+                                </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+
+
+
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
